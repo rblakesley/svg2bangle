@@ -210,7 +210,8 @@
         else encodedPoints = JSON.stringify(points.map(n => Math.round(n * 10) / 10));
         let fields = [];
         if (pointsOnly) {
-          return `  ${encodedPoints.join(', ')}`;          
+          fields.push(encodedPoints);
+          return `  ${fields.join(', ')}`;
         } else {
           if (poly.fill) fields.push(`fill: "${poly.fill}"`);
           if (poly.stroke) fields.push(`stroke: "${poly.stroke}"`);
