@@ -200,18 +200,23 @@
       return poly;
     });
 
+    let pointsOnly=true;
     return `var polyImg = [\n${
       polys.map(poly => {
         let points = poly.points.flatMap(p => [p.x, p.y]);
-        let fields = [];
-        if (poly.fill) fields.push(`fill: "${poly.fill}"`);
-        if (poly.stroke) fields.push(`stroke: "${poly.stroke}"`);
         let encodedPoints;
         if (numberFormat == "float") encodedPoints = encodeAsFloatArray(points);
         else if (numberFormat == "int") encodedPoints = encodeAsIntArray(points);
         else encodedPoints = JSON.stringify(points.map(n => Math.round(n * 10) / 10));
-        fields.push("points: " + encodedPoints);
-        return `  {${fields.join(', ')}}`;
+        let fields = [];
+        if (pointsOnly) {
+          return `  ${encodedPoints.join(', ')}`;          
+        } else {
+          if (poly.fill) fields.push(`fill: "${poly.fill}"`);
+          if (poly.stroke) fields.push(`stroke: "${poly.stroke}"`);
+          fields.push("points: " + encodedPoints);
+          return `  {${fields.join(', ')}}`;
+        }
       }).join(",\n")
     }\n];`;
   }
