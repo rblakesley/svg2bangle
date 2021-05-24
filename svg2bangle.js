@@ -209,7 +209,7 @@
         let encodedPoints;
         if (numberFormat == "float") encodedPoints = encodeAsFloatArray(points);
         else if (numberFormat == "int") encodedPoints = encodeAsIntArray(points);
-        else encodedPoints = JSON.stringify(points.map(n => Math.round(n * 1000) / 1000));
+        else encodedPoints = JSON.stringify(points.map(n => Math.round(n * 10) / 10));
         fields.push("points: " + encodedPoints);
         return `  {${fields.join(', ')}}`;
       }).join(",\n")
